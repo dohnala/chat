@@ -69,7 +69,7 @@ public class JoinRoomTest extends AbstractChatTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
-                  new KickUser("UserA"));
+                  new KickUser("UserA", "Moderator", "No reason"));
             when(new JoinRoom("UserA"));
             thenExpectEvents(new UserJoined("UserA"));
         }};

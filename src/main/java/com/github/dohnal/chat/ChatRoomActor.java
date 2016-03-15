@@ -72,7 +72,7 @@ public class ChatRoomActor extends AbstractPersistentActor
                 .match(JoinRoom.class, cmd -> handle(cmd, c -> state.joinRoom(c.getUsername())))
                 .match(SendMessage.class, cmd -> handle(cmd, c -> state.sendMessage(c.getUsername(), c.getMessage())))
                 .match(LeaveRoom.class, cmd -> handle(cmd, c -> state.leaveRoom(c.getUsername())))
-                .match(KickUser.class, cmd -> handle(cmd, c -> state.kickUser(c.getUsername())))
+                .match(KickUser.class, cmd -> handle(cmd, c -> state.kickUser(c.getUsername(), c.getKickedBy(), c.getReason())))
                 .build();
     }
 

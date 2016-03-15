@@ -81,7 +81,7 @@ public class LeaveRoomTest extends AbstractChatTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
-                  new KickUser("UserA"));
+                  new KickUser("UserA", "Moderator", "No reason"));
             when(new LeaveRoom("UserA"));
             thenExpectExceptions(new UserNotJoined("UserA"));
         }};
@@ -92,7 +92,7 @@ public class LeaveRoomTest extends AbstractChatTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
-                  new KickUser("UserA"),
+                  new KickUser("UserA", "Moderator", "No reason"),
                   new JoinRoom("UserA"));
             when(new LeaveRoom("UserA"));
             thenExpectEvents(new UserLeft("UserA"));

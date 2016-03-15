@@ -17,7 +17,7 @@ public class KickUserTest extends AbstractChatTest
     public void testKickUser()
     {
         new ChatTestCase() {{
-            when(new KickUser("UserA"));
+            when(new KickUser("UserA", "Moderator", "No reason"));
             thenExpectExceptions(new UserNotJoined("UserA"));
         }};
     }
@@ -27,8 +27,8 @@ public class KickUserTest extends AbstractChatTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"));
-            when(new KickUser("UserA"));
-            thenExpectEvents(new UserKicked("UserA"));
+            when(new KickUser("UserA", "Moderator", "No reason"));
+            thenExpectEvents(new UserKicked("UserA", "Moderator", "No reason"));
         }};
     }
 
@@ -37,7 +37,7 @@ public class KickUserTest extends AbstractChatTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"));
-            when(new KickUser("UserB"));
+            when(new KickUser("UserB", "Moderator", "No reason"));
             thenExpectExceptions(new UserNotJoined("UserB"));
         }};
     }
@@ -47,8 +47,8 @@ public class KickUserTest extends AbstractChatTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
-                  new KickUser("UserA"));
-            when(new KickUser("UserA"));
+                  new KickUser("UserA", "Moderator", "No reason"));
+            when(new KickUser("UserA", "Moderator", "No reason"));
             thenExpectExceptions(new UserNotJoined("UserA"));
         }};
     }
@@ -59,8 +59,8 @@ public class KickUserTest extends AbstractChatTest
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
                   new SendMessage("UserA", "message"));
-            when(new KickUser("UserA"));
-            thenExpectEvents(new UserKicked("UserA"));
+            when(new KickUser("UserA", "Moderator", "No reason"));
+            thenExpectEvents(new UserKicked("UserA", "Moderator", "No reason"));
         }};
     }
 
@@ -70,7 +70,7 @@ public class KickUserTest extends AbstractChatTest
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
                   new LeaveRoom("UserA"));
-            when(new KickUser("UserA"));
+            when(new KickUser("UserA", "Moderator", "No reason"));
             thenExpectExceptions(new UserNotJoined("UserA"));
         }};
     }
@@ -82,8 +82,8 @@ public class KickUserTest extends AbstractChatTest
             given(new JoinRoom("UserA"),
                   new LeaveRoom("UserA"),
                   new JoinRoom("UserA"));
-            when(new KickUser("UserA"));
-            thenExpectEvents(new UserKicked("UserA"));
+            when(new KickUser("UserA", "Moderator", "No reason"));
+            thenExpectEvents(new UserKicked("UserA", "Moderator", "No reason"));
         }};
     }
 
@@ -92,10 +92,10 @@ public class KickUserTest extends AbstractChatTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
-                  new KickUser("UserA"),
+                  new KickUser("UserA", "Moderator", "No reason"),
                   new JoinRoom("UserA"));
-            when(new KickUser("UserA"));
-            thenExpectEvents(new UserKicked("UserA"));
+            when(new KickUser("UserA", "Moderator", "No reason"));
+            thenExpectEvents(new UserKicked("UserA", "Moderator", "No reason"));
         }};
     }
 }

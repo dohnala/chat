@@ -62,14 +62,16 @@ public class ChatRoom implements Serializable
     }
 
     @Nonnull
-    public List<ChatEvent> kickUser(final @Nonnull String username) throws ChatRoomException
+    public List<ChatEvent> kickUser(final @Nonnull String username,
+                                    final @Nonnull String kickedBy,
+                                    final @Nonnull String reason) throws ChatRoomException
     {
         if (!users.contains(username))
         {
             throw new ChatRoomException(new UserNotJoined(username));
         }
 
-        return Lists.newArrayList(new UserKicked(username));
+        return Lists.newArrayList(new UserKicked(username, kickedBy, reason));
     }
 
     public void update(final @Nonnull ChatEvent event)
