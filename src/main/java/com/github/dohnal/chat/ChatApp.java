@@ -29,6 +29,7 @@ public class ChatApp
         // Join room as John
         chatRoom.tell(new JoinRoom("John"), ActorRef.noSender());
 
+        // Send messages
         chatRoom.tell(new SendMessage("John", "Hello!"), ActorRef.noSender());
         chatRoom.tell(new SendMessage("John", "Fuck! ... nobody here"), ActorRef.noSender());
     }
