@@ -7,6 +7,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import com.github.dohnal.chat.domain.protocol.command.JoinRoom;
 import com.github.dohnal.chat.domain.protocol.command.SendMessage;
+import com.github.dohnal.chat.read.ChatRoomViewActor;
 import com.github.dohnal.chat.write.ChatModeratorActor;
 import com.github.dohnal.chat.write.ChatRoomActor;
 import com.google.common.collect.Sets;
@@ -25,6 +26,8 @@ public class ChatApp
 
         // Create chat room actor
         final ActorRef chatRoom = system.actorOf(ChatRoomActor.props(), ChatRoomActor.NAME);
+
+        final ActorRef chatRoomView = system.actorOf(ChatRoomViewActor.props(), ChatRoomViewActor.NAME);
 
         // Create moderator
         final ActorRef moderator = system.actorOf(ChatModeratorActor.props(WORD_BLACK_LIST, chatRoom));

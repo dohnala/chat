@@ -1,5 +1,6 @@
 package com.github.dohnal.chat.domain.protocol.command;
 
+
 import com.github.dohnal.chat.domain.protocol.ChatMessage;
 
 /**
