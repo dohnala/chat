@@ -1,6 +1,7 @@
 package com.github.dohnal.chat.read;
 
 import javax.annotation.Nonnull;
+import java.util.Date;
 
 import akka.actor.Props;
 import akka.event.Logging;
@@ -8,10 +9,14 @@ import akka.event.LoggingAdapter;
 import akka.japi.pf.ReceiveBuilder;
 import akka.persistence.AbstractPersistentView;
 import com.github.dohnal.chat.domain.ChatRoom;
+import com.github.dohnal.chat.domain.Message;
+import com.github.dohnal.chat.domain.MessageTools;
 import com.github.dohnal.chat.domain.protocol.event.MessageSent;
 import com.github.dohnal.chat.domain.protocol.event.UserJoined;
 import com.github.dohnal.chat.domain.protocol.event.UserKicked;
 import com.github.dohnal.chat.domain.protocol.event.UserLeft;
+import com.github.dohnal.chat.domain.protocol.query.GetChatRoom;
+import com.github.dohnal.chat.domain.protocol.query.GetChatRoomResult;
 import com.github.dohnal.chat.write.ChatRoomActor;
 import scala.PartialFunction;
 import scala.runtime.BoxedUnit;
@@ -26,7 +31,7 @@ public class ChatRoomViewActor extends AbstractPersistentView
 
     private LoggingAdapter LOG = Logging.getLogger(getContext().system(), this);
 
-    private ChatRoom chatRoom;
+    private final ChatRoom chatRoom;
 
     public static Props props()
     {
@@ -55,30 +60,65 @@ public class ChatRoomViewActor extends AbstractPersistentView
     public PartialFunction<Object, BoxedUnit> receive()
     {
         return ReceiveBuilder
-                .match(UserJoined.class, e -> isPersistent(), this::onUserJoined)
+                .match(UserJoined.class, e -> isPersistent(), this::onUserJoin)
                 .match(MessageSent.class, e -> isPersistent(), this::onMessageSent)
                 .match(UserLeft.class, e -> isPersistent(), this::onUserLeft)
-        .match(UserKicked.class, e -> isPersistent(), this::onUserKicked)
-        .build();
+                .match(UserKicked.class, e -> isPersistent(), this::onUserKicked)
+                .match(GetChatRoom.class, this::getChatRoom)
+                .build();
     }
 
-    protected void onUserJoined(final @Nonnull UserJoined event)
+    protected void onUserJoin(final @Nonnull UserJoined event)
     {
-        LOG.info("Received: " + event);
+        LOG.info("Received event: " + event);
+
+        chatRoom.getUsers().add(event.getUsername());
+
+        addMessage(event.getUsername(), MessageTools.convert(event), event.getDate());
     }
 
     protected void onMessageSent(final @Nonnull MessageSent event)
     {
-        LOG.info("Received: " + event);
+        LOG.info("Received event: " + event);
+
+        addMessage(event.getUsername(), MessageTools.convert(event), event.getDate());
     }
 
     protected void onUserLeft(final @Nonnull UserLeft event)
     {
-        LOG.info("Received: " + event);
+        LOG.info("Received event: " + event);
+
+        chatRoom.getUsers().remove(event.getUsername());
+
+        addMessage(event.getUsername(), MessageTools.convert(event), event.getDate());
     }
 
     protected void onUserKicked(final @Nonnull UserKicked event)
     {
-        LOG.info("Received: " + event);
+        LOG.info("Received event: " + event);
+
+        chatRoom.getUsers().remove(event.getUsername());
+
+        addMessage(event.getUsername(), MessageTools.convert(event), event.getDate());
+    }
+
+    protected void addMessage(final @Nonnull String username,
+                              final @Nonnull String message,
+                              final @Nonnull Date date)
+    {
+        Message chatMessage = new Message();
+        chatMessage.setUsername(username);
+        chatMessage.setMessage(message);
+        chatMessage.setDate(date);
+
+        chatRoom.getMessages().add(chatMessage);
+    }
+
+    protected void getChatRoom(final @Nonnull GetChatRoom query)
+    {
+        LOG.info("Received query: " + query);
+
+        // send him result
+        sender().tell(new GetChatRoomResult(chatRoom), self());
     }
 }

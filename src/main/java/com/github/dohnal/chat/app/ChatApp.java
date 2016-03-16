@@ -1,41 +1,32 @@
 package com.github.dohnal.chat.app;
 
-import java.util.Set;
-
-import akka.actor.ActorRef;
-import akka.actor.ActorSystem;
-import com.github.dohnal.chat.domain.protocol.command.JoinRoom;
-import com.github.dohnal.chat.domain.protocol.command.SendMessage;
-import com.github.dohnal.chat.read.ChatRoomViewActor;
-import com.github.dohnal.chat.write.ChatModeratorActor;
-import com.github.dohnal.chat.write.ChatRoomActor;
-import com.google.common.collect.Sets;
+import com.github.dohnal.chat.ChatRuntime;
+import com.github.dohnal.chat.domain.ChatRepository;
+import com.github.dohnal.chat.domain.ChatService;
+import com.github.dohnal.chat.read.ChatRepositoryAkka;
+import com.github.dohnal.chat.write.ChatServiceAkka;
 
 /**
  * @author dohnal
  */
 public class ChatApp
 {
-    private static final Set<String> WORD_BLACK_LIST = Sets.newHashSet("fuck");
-
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
     {
-        // Create actor system
-        final ActorSystem system = ActorSystem.create("system");
-
-        // Create chat room actor
-        final ActorRef chatRoom = system.actorOf(ChatRoomActor.props(), ChatRoomActor.NAME);
-
-        final ActorRef chatRoomView = system.actorOf(ChatRoomViewActor.props(), ChatRoomViewActor.NAME);
-
-        // Create moderator
-        final ActorRef moderator = system.actorOf(ChatModeratorActor.props(WORD_BLACK_LIST, chatRoom));
+        final ChatRuntime chatRuntime = new ChatRuntime();
+        final ChatService chatService = new ChatServiceAkka(chatRuntime);
+        final ChatRepository chatRepository = new ChatRepositoryAkka(chatRuntime);
 
         // Join room as John
-        chatRoom.tell(new JoinRoom("John"), ActorRef.noSender());
+        chatService.joinRoom("John");
 
         // Send messages
-        chatRoom.tell(new SendMessage("John", "Hello!"), ActorRef.noSender());
-        chatRoom.tell(new SendMessage("John", "Fuck! ... nobody here"), ActorRef.noSender());
+        chatService.sendMessage("John", "Hello!");
+        chatService.sendMessage("John", "Fuck! ... nobody here");
+
+        Thread.sleep(1000);
+
+        // Print current view state
+        System.out.println(chatRepository.getChatRoom());
     }
 }

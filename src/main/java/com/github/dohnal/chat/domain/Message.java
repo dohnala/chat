@@ -2,10 +2,13 @@ package com.github.dohnal.chat.domain;
 
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 /**
  * @author dohnal
  */
-public class ChatMessage
+public class Message
 {
     private String username;
 
@@ -41,5 +44,11 @@ public class ChatMessage
     public void setDate(Date date)
     {
         this.date = date;
+    }
+
+    @Override
+    public String toString()
+    {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 }

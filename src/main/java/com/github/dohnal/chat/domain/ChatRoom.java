@@ -6,6 +6,8 @@ import java.util.Set;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * @author dohnal
@@ -16,7 +18,7 @@ public class ChatRoom implements Serializable
 
     private Set<String> users = Sets.newHashSet();
 
-    private List<ChatMessage> messages = Lists.newArrayList();
+    private List<Message> messages = Lists.newArrayList();
 
     public String getName()
     {
@@ -38,13 +40,19 @@ public class ChatRoom implements Serializable
         this.users = users;
     }
 
-    public List<ChatMessage> getMessages()
+    public List<Message> getMessages()
     {
         return messages;
     }
 
-    public void setMessages(List<ChatMessage> messages)
+    public void setMessages(List<Message> messages)
     {
         this.messages = messages;
+    }
+
+    @Override
+    public String toString()
+    {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

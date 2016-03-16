@@ -4,24 +4,24 @@ import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.github.dohnal.chat.domain.ChatMessage;
+import com.github.dohnal.chat.domain.protocol.ChatMessage;
 
 /**
  * @author dohnal
  */
 public abstract class ChatQueryResult<T extends Serializable> extends ChatMessage
 {
-    protected final T result;
+    protected final T value;
 
     public ChatQueryResult(final @Nonnull T result)
     {
-        this.result = result;
+        this.value = result;
     }
 
     @Nonnull
-    public T getResult()
+    public T getValue()
     {
-        return result;
+        return value;
     }
 
     @Override
@@ -29,6 +29,6 @@ public abstract class ChatQueryResult<T extends Serializable> extends ChatMessag
     {
         return super.equals(obj)
                 && getClass() == obj.getClass()
-                && Objects.equals(result, ((ChatQueryResult)obj).result);
+                && Objects.equals(value, ((ChatQueryResult)obj).value);
     }
 }

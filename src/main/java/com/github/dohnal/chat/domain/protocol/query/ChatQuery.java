@@ -1,6 +1,6 @@
 package com.github.dohnal.chat.domain.protocol.query;
 
-import com.github.dohnal.chat.domain.ChatMessage;
+import com.github.dohnal.chat.domain.protocol.ChatMessage;
 
 /**
  * @author dohnal
