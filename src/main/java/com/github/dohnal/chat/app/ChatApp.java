@@ -24,6 +24,7 @@ public class ChatApp
         chatService.sendMessage("John", "Hello!");
         chatService.sendMessage("John", "Fuck! ... nobody here");
 
+        // Wait for view synchronization
         Thread.sleep(1000);
 
         // Print current view state
