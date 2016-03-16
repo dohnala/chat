@@ -18,9 +18,9 @@ import scala.runtime.BoxedUnit;
  */
 public class ChatModeratorActor extends AbstractActor
 {
-    private static final String NAME = "Moderator";
+    public static final String NAME = "Moderator";
 
-    private static final String REASON = "Using inappropriate words";
+    public static final String REASON = "Using inappropriate words";
 
     private final Collection<String> wordBlackList;
 

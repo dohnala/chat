@@ -1,4 +1,4 @@
-package com.github.dohnal.chat;
+package com.github.dohnal.chat.room;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -10,6 +10,7 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.japi.pf.ReceiveBuilder;
 import akka.testkit.JavaTestKit;
+import com.github.dohnal.chat.ChatRoomActor;
 import com.github.dohnal.chat.model.protocol.ChatCommand;
 import com.github.dohnal.chat.model.protocol.ChatCommandResult;
 import com.github.dohnal.chat.model.protocol.ChatEvent;
@@ -24,7 +25,7 @@ import scala.runtime.BoxedUnit;
 /**
  * @author dohnal
  */
-public abstract class AbstractChatTest
+public abstract class AbstractChatRoomTest
 {
     private static final String PUBLISH = "publish";
 

@@ -1,4 +1,4 @@
-package com.github.dohnal.chat;
+package com.github.dohnal.chat.room;
 
 import com.github.dohnal.chat.model.protocol.commands.JoinRoom;
 import com.github.dohnal.chat.model.protocol.commands.KickUser;
@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * @author dohnal
  */
-public class LeaveRoomTest extends AbstractChatTest
+public class LeaveRoomTest extends AbstractChatRoomTest
 {
     @Test
     public void testLeaveRoom()
