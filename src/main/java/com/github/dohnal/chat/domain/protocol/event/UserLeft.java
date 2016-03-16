@@ -1,6 +1,7 @@
 package com.github.dohnal.chat.domain.protocol.event;
 
 import javax.annotation.Nonnull;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -10,9 +11,10 @@ public final class UserLeft extends ChatEvent
 {
     private final String username;
 
-    public UserLeft(final @Nonnull String username)
+    public UserLeft(final @Nonnull String username,
+                    final @Nonnull Date date)
     {
-        super();
+        super(date);
 
         this.username = username;
     }

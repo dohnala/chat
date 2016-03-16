@@ -19,7 +19,7 @@ public final class MessageSent extends ChatEvent
                        final @Nonnull String message,
                        final @Nonnull Date date)
     {
-        super();
+        super(date);
 
         this.username = username;
         this.message = message;
@@ -50,7 +50,6 @@ public final class MessageSent extends ChatEvent
         return super.equals(obj)
                 && getClass() == obj.getClass()
                 && Objects.equals(username, ((MessageSent) obj).username)
-                && Objects.equals(message, ((MessageSent) obj).message)
-                && Objects.equals(date, ((MessageSent) obj).date);
+                && Objects.equals(message, ((MessageSent) obj).message);
     }
 }

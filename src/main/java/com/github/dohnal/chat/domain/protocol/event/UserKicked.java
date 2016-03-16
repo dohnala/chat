@@ -1,6 +1,7 @@
 package com.github.dohnal.chat.domain.protocol.event;
 
 import javax.annotation.Nonnull;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -16,9 +17,10 @@ public final class UserKicked extends ChatEvent
 
     public UserKicked(final @Nonnull String username,
                       final @Nonnull String kickedBy,
-                      final @Nonnull String reason)
+                      final @Nonnull String reason,
+                      final @Nonnull Date date)
     {
-        super();
+        super(date);
 
         this.username = username;
         this.kickedBy = kickedBy;
