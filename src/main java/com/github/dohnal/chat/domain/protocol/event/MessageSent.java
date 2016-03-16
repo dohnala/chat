@@ -1,21 +1,23 @@
-package com.github.dohnal.chat.domain.protocol.command;
+package com.github.dohnal.chat.domain.protocol.event;
 
 import javax.annotation.Nonnull;
+import java.util.Date;
 import java.util.Objects;
 
 /**
  * @author dohnal
  */
-public final class SendMessage extends ChatCommand
+public final class MessageSent extends ChatEvent
 {
     private final String username;
 
     private final String message;
 
-    public SendMessage(final @Nonnull String username,
-                       final @Nonnull String message)
+    public MessageSent(final @Nonnull String username,
+                       final @Nonnull String message,
+                       final @Nonnull Date date)
     {
-        super();
+        super(date);
 
         this.username = username;
         this.message = message;
@@ -38,7 +40,7 @@ public final class SendMessage extends ChatCommand
     {
         return super.equals(obj)
                 && getClass() == obj.getClass()
-                && Objects.equals(username, ((SendMessage) obj).username)
-                && Objects.equals(message, ((SendMessage) obj).message);
+                && Objects.equals(username, ((MessageSent) obj).username)
+                && Objects.equals(message, ((MessageSent) obj).message);
     }
 }

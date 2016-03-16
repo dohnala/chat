@@ -1,7 +1,5 @@
 package com.github.dohnal.chat.write.room;
 
-import java.util.Date;
-
 import com.github.dohnal.chat.domain.protocol.command.JoinRoom;
 import com.github.dohnal.chat.domain.protocol.command.KickUser;
 import com.github.dohnal.chat.domain.protocol.command.LeaveRoom;
@@ -30,7 +28,7 @@ public class LeaveRoomTest extends AbstractChatRoomTest
         new ChatTestCase() {{
             given(new JoinRoom("UserA"));
             when(new LeaveRoom("UserA"));
-            thenExpectEvents(new UserLeft("UserA"));
+            thenExpectEvents(new UserLeft("UserA", date));
         }};
     }
 
@@ -60,9 +58,9 @@ public class LeaveRoomTest extends AbstractChatRoomTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
-                  new SendMessage("UserA", "message", new Date()));
+                  new SendMessage("UserA", "message"));
             when(new LeaveRoom("UserA"));
-            thenExpectEvents(new UserLeft("UserA"));
+            thenExpectEvents(new UserLeft("UserA", date));
         }};
     }
 
@@ -74,7 +72,7 @@ public class LeaveRoomTest extends AbstractChatRoomTest
                   new LeaveRoom("UserA"),
                   new JoinRoom("UserA"));
             when(new LeaveRoom("UserA"));
-            thenExpectEvents(new UserLeft("UserA"));
+            thenExpectEvents(new UserLeft("UserA", date));
         }};
     }
 
@@ -97,7 +95,7 @@ public class LeaveRoomTest extends AbstractChatRoomTest
                   new KickUser("UserA", "Moderator", "No reason"),
                   new JoinRoom("UserA"));
             when(new LeaveRoom("UserA"));
-            thenExpectEvents(new UserLeft("UserA"));
+            thenExpectEvents(new UserLeft("UserA", date));
         }};
     }
 }

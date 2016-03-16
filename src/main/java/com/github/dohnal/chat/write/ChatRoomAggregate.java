@@ -36,20 +36,19 @@ public class ChatRoomAggregate implements Serializable
             throw new ChatRoomException(new UserAlreadyJoined(username));
         }
 
-        return Lists.newArrayList(new UserJoined(username));
+        return Lists.newArrayList(new UserJoined(username, new Date()));
     }
 
     @Nonnull
     public List<ChatEvent> sendMessage(final @Nonnull String username,
-                                       final @Nonnull String message,
-                                       final @Nonnull Date date) throws ChatRoomException
+                                       final @Nonnull String message) throws ChatRoomException
     {
         if (!users.contains(username))
         {
             throw new ChatRoomException(new UserNotJoined(username));
         }
 
-        return Lists.newArrayList(new MessageSent(username, message, date));
+        return Lists.newArrayList(new MessageSent(username, message, new Date()));
     }
 
     @Nonnull
@@ -60,7 +59,7 @@ public class ChatRoomAggregate implements Serializable
             throw new ChatRoomException(new UserNotJoined(username));
         }
 
-        return Lists.newArrayList(new UserLeft(username));
+        return Lists.newArrayList(new UserLeft(username, new Date()));
     }
 
     @Nonnull
@@ -73,7 +72,7 @@ public class ChatRoomAggregate implements Serializable
             throw new ChatRoomException(new UserNotJoined(username));
         }
 
-        return Lists.newArrayList(new UserKicked(username, kickedBy, reason));
+        return Lists.newArrayList(new UserKicked(username, kickedBy, reason, new Date()));
     }
 
     public void update(final @Nonnull ChatEvent event)

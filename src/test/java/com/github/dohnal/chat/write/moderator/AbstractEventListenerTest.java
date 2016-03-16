@@ -1,6 +1,7 @@
 package com.github.dohnal.chat.write.moderator;
 
 import javax.annotation.Nonnull;
+import java.util.Date;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -40,9 +41,13 @@ public abstract class AbstractEventListenerTest
 
     protected class TestCase extends JavaTestKit
     {
+        protected final Date date;
+
         public TestCase()
         {
             super(system);
+
+            date = new Date();
 
             // create actor
             actor = setupActor(getRef());

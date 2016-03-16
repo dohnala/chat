@@ -4,7 +4,6 @@ import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.UUID;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -17,6 +16,7 @@ import com.github.dohnal.chat.domain.protocol.event.ChatEvent;
 import com.github.dohnal.chat.domain.protocol.exception.ChatException;
 import com.github.dohnal.chat.write.ChatRoomActor;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,15 +59,12 @@ public abstract class AbstractChatRoomTest
 
     protected class ChatTestCase extends JavaTestKit
     {
-        protected final String roomId;
-
         protected final Date date;
 
         public ChatTestCase()
         {
             super(system);
 
-            this.roomId = UUID.randomUUID().toString();
             this.date = new Date();
 
             // subscribe test kit actor to event stream
@@ -109,7 +106,13 @@ public abstract class AbstractChatRoomTest
         public void thenExpectEvents(final @Nonnull ChatEvent... events)
         {
             expectMsgEquals(ChatCommandResult.OK);
-            expectMsgAllOf((Object[])events);
+
+            for (ChatEvent event : events)
+            {
+                ChatEvent receivedEvent = expectMsgClass(event.getClass());
+
+                Assert.assertTrue(EqualsBuilder.reflectionEquals(event, receivedEvent, new String[]{"date"}));
+            }
         }
     }
 
