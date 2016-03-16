@@ -1,5 +1,6 @@
 package com.github.dohnal.chat.app;
 
+import java.util.Date;
 import java.util.Set;
 
 import akka.actor.ActorRef;
@@ -32,7 +33,7 @@ public class ChatApp
         chatRoom.tell(new JoinRoom("John"), ActorRef.noSender());
 
         // Send messages
-        chatRoom.tell(new SendMessage("John", "Hello!"), ActorRef.noSender());
-        chatRoom.tell(new SendMessage("John", "Fuck! ... nobody here"), ActorRef.noSender());
+        chatRoom.tell(new SendMessage("John", "Hello!", new Date()), ActorRef.noSender());
+        chatRoom.tell(new SendMessage("John", "Fuck! ... nobody here", new Date()), ActorRef.noSender());
     }
 }

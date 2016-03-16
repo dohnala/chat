@@ -17,6 +17,7 @@ public final class LeaveRoom extends ChatCommand
         this.username = username;
     }
 
+    @Nonnull
     public String getUsername()
     {
         return username;

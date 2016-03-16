@@ -1,5 +1,7 @@
 package com.github.dohnal.chat.write.room;
 
+import java.util.Date;
+
 import com.github.dohnal.chat.domain.protocol.command.JoinRoom;
 import com.github.dohnal.chat.domain.protocol.command.KickUser;
 import com.github.dohnal.chat.domain.protocol.command.LeaveRoom;
@@ -58,7 +60,7 @@ public class KickUserTest extends AbstractChatRoomTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
-                  new SendMessage("UserA", "message"));
+                  new SendMessage("UserA", "message", new Date()));
             when(new KickUser("UserA", "Moderator", "No reason"));
             thenExpectEvents(new UserKicked("UserA", "Moderator", "No reason"));
         }};

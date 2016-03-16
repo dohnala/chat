@@ -18,6 +18,7 @@ public final class UserJoined extends ChatEvent
         this.username = username;
     }
 
+    @Nonnull
     public String getUsername()
     {
         return username;

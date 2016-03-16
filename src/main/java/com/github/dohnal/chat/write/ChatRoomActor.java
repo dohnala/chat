@@ -67,10 +67,14 @@ public class ChatRoomActor extends AbstractPersistentActor
     public PartialFunction<Object, BoxedUnit> receiveCommand()
     {
         return ReceiveBuilder
-                .match(JoinRoom.class, cmd -> handle(cmd, c -> state.joinRoom(c.getUsername())))
-                .match(SendMessage.class, cmd -> handle(cmd, c -> state.sendMessage(c.getUsername(), c.getMessage())))
-                .match(LeaveRoom.class, cmd -> handle(cmd, c -> state.leaveRoom(c.getUsername())))
-                .match(KickUser.class, cmd -> handle(cmd, c -> state.kickUser(c.getUsername(), c.getKickedBy(), c.getReason())))
+                .match(JoinRoom.class, cmd -> handle(cmd, c ->
+                        state.joinRoom(c.getUsername())))
+                .match(SendMessage.class, cmd -> handle(cmd, c ->
+                        state.sendMessage(c.getUsername(), c.getMessage(), c.getDate())))
+                .match(LeaveRoom.class, cmd -> handle(cmd, c ->
+                        state.leaveRoom(c.getUsername())))
+                .match(KickUser.class, cmd -> handle(cmd, c ->
+                        state.kickUser(c.getUsername(), c.getKickedBy(), c.getReason())))
                 .build();
     }
 

@@ -1,6 +1,7 @@
 package com.github.dohnal.chat.write.moderator;
 
 import javax.annotation.Nonnull;
+import java.util.Date;
 import java.util.Set;
 
 import akka.actor.ActorRef;
@@ -28,7 +29,7 @@ public class ChatModeratorTest extends AbstractEventListenerTest
     public void testValidWord()
     {
         new TestCase() {{
-            given(new MessageSent("UserA", "Hello"));
+            given(new MessageSent("UserA", "Hello", new Date()));
             thenExpectNoCommand();
         }};
     }
@@ -37,7 +38,7 @@ public class ChatModeratorTest extends AbstractEventListenerTest
     public void testInvalidWord()
     {
         new TestCase() {{
-            given(new MessageSent("UserA", "shit"));
+            given(new MessageSent("UserA", "shit", new Date()));
             thenExpectCommands(new KickUser("UserA", ChatModeratorActor.NAME, ChatModeratorActor.REASON));
         }};
     }
@@ -46,7 +47,7 @@ public class ChatModeratorTest extends AbstractEventListenerTest
     public void testInvalidWordIgnoreCase()
     {
         new TestCase() {{
-            given(new MessageSent("UserA", "ShIt"));
+            given(new MessageSent("UserA", "ShIt", new Date()));
             thenExpectCommands(new KickUser("UserA", ChatModeratorActor.NAME, ChatModeratorActor.REASON));
         }};
     }
@@ -55,7 +56,7 @@ public class ChatModeratorTest extends AbstractEventListenerTest
     public void testInvalidWordSubstring()
     {
         new TestCase() {{
-            given(new MessageSent("UserA", "blablashitbla"));
+            given(new MessageSent("UserA", "blablashitbla", new Date()));
             thenExpectCommands(new KickUser("UserA", ChatModeratorActor.NAME, ChatModeratorActor.REASON));
         }};
     }
@@ -64,8 +65,8 @@ public class ChatModeratorTest extends AbstractEventListenerTest
     public void testInvalidWordFromDifferentUser()
     {
         new TestCase() {{
-            given(new MessageSent("UserA", "Hello"),
-                  new MessageSent("UserB", "shit"));
+            given(new MessageSent("UserA", "Hello", new Date()),
+                  new MessageSent("UserB", "shit", new Date()));
             thenExpectCommands(new KickUser("UserB", ChatModeratorActor.NAME, ChatModeratorActor.REASON));
         }};
     }

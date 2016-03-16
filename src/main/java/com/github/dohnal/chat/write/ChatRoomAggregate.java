@@ -2,6 +2,7 @@ package com.github.dohnal.chat.write;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -40,14 +41,15 @@ public class ChatRoomAggregate implements Serializable
 
     @Nonnull
     public List<ChatEvent> sendMessage(final @Nonnull String username,
-                                       final @Nonnull String message) throws ChatRoomException
+                                       final @Nonnull String message,
+                                       final @Nonnull Date date) throws ChatRoomException
     {
         if (!users.contains(username))
         {
             throw new ChatRoomException(new UserNotJoined(username));
         }
 
-        return Lists.newArrayList(new MessageSent(username, message));
+        return Lists.newArrayList(new MessageSent(username, message, date));
     }
 
     @Nonnull

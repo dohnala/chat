@@ -1,5 +1,7 @@
 package com.github.dohnal.chat.write.room;
 
+import java.util.Date;
+
 import com.github.dohnal.chat.domain.protocol.command.JoinRoom;
 import com.github.dohnal.chat.domain.protocol.command.KickUser;
 import com.github.dohnal.chat.domain.protocol.command.LeaveRoom;
@@ -17,7 +19,7 @@ public class SendMessageTest extends AbstractChatRoomTest
     public void testSendMessage()
     {
         new ChatTestCase() {{
-            when(new SendMessage("UserA", "message"));
+            when(new SendMessage("UserA", "message", date));
             thenExpectExceptions(new UserNotJoined("UserA"));
         }};
     }
@@ -27,8 +29,8 @@ public class SendMessageTest extends AbstractChatRoomTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"));
-            when(new SendMessage("UserA", "message"));
-            thenExpectEvents(new MessageSent("UserA", "message"));
+            when(new SendMessage("UserA", "message", date));
+            thenExpectEvents(new MessageSent("UserA", "message", date));
         }};
     }
 
@@ -37,7 +39,7 @@ public class SendMessageTest extends AbstractChatRoomTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"));
-            when(new SendMessage("UserB", "message"));
+            when(new SendMessage("UserB", "message", date));
             thenExpectExceptions(new UserNotJoined("UserB"));
         }};
     }
@@ -47,9 +49,9 @@ public class SendMessageTest extends AbstractChatRoomTest
     {
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
-                  new SendMessage("UserA", "message"));
-            when(new SendMessage("UserA", "message"));
-            thenExpectEvents(new MessageSent("UserA", "message"));
+                  new SendMessage("UserA", "message", new Date()));
+            when(new SendMessage("UserA", "message", date));
+            thenExpectEvents(new MessageSent("UserA", "message", date));
         }};
     }
 
@@ -59,7 +61,7 @@ public class SendMessageTest extends AbstractChatRoomTest
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
                   new LeaveRoom("UserA"));
-            when(new SendMessage("UserA", "message"));
+            when(new SendMessage("UserA", "message", date));
             thenExpectExceptions(new UserNotJoined("UserA"));
         }};
     }
@@ -71,8 +73,8 @@ public class SendMessageTest extends AbstractChatRoomTest
             given(new JoinRoom("UserA"),
                   new LeaveRoom("UserA"),
                   new JoinRoom("UserA"));
-            when(new SendMessage("UserA", "message"));
-            thenExpectEvents(new MessageSent("UserA", "message"));
+            when(new SendMessage("UserA", "message", date));
+            thenExpectEvents(new MessageSent("UserA", "message", date));
         }};
     }
 
@@ -82,7 +84,7 @@ public class SendMessageTest extends AbstractChatRoomTest
         new ChatTestCase() {{
             given(new JoinRoom("UserA"),
                   new KickUser("UserA", "Moderator", "No reason"));
-            when(new SendMessage("UserA", "message"));
+            when(new SendMessage("UserA", "message", date));
             thenExpectExceptions(new UserNotJoined("UserA"));
         }};
     }
@@ -94,8 +96,8 @@ public class SendMessageTest extends AbstractChatRoomTest
             given(new JoinRoom("UserA"),
                   new KickUser("UserA", "Moderator", "No reason"),
                   new JoinRoom("UserA"));
-            when(new SendMessage("UserA", "message"));
-            thenExpectEvents(new MessageSent("UserA", "message"));
+            when(new SendMessage("UserA", "message", date));
+            thenExpectEvents(new MessageSent("UserA", "message", date));
         }};
     }
 }

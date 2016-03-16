@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
  */
 public class ChatCommandResult extends ChatMessage
 {
-    private Collection<ChatException> exceptions;
+    private final Collection<ChatException> exceptions;
 
     public static final ChatCommandResult OK = new ChatCommandResult(Lists.newArrayList());
 
@@ -38,6 +38,7 @@ public class ChatCommandResult extends ChatMessage
         return !exceptions.isEmpty();
     }
 
+    @Nonnull
     public Collection<ChatException> getErrors()
     {
         return exceptions;

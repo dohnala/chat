@@ -17,6 +17,7 @@ public final class UserAlreadyJoined extends ChatException
         this.username = username;
     }
 
+    @Nonnull
     public String getUsername()
     {
         return username;

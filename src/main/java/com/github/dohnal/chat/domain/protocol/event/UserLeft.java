@@ -17,6 +17,7 @@ public final class UserLeft extends ChatEvent
         this.username = username;
     }
 
+    @Nonnull
     public String getUsername()
     {
         return username;

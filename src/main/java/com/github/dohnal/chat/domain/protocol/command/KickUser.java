@@ -14,6 +14,7 @@ public final class KickUser extends ChatCommand
 
     private final String reason;
 
+    @Nonnull
     public KickUser(final @Nonnull String username,
                     final @Nonnull String kickedBy,
                     final @Nonnull String reason)

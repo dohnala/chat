@@ -17,6 +17,7 @@ public final class JoinRoom extends ChatCommand
         this.username = username;
     }
 
+    @Nonnull
     public String getUsername()
     {
         return username;

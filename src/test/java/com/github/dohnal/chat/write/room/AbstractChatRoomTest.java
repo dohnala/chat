@@ -3,6 +3,7 @@ package com.github.dohnal.chat.write.room;
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.UUID;
 
 import akka.actor.ActorRef;
@@ -60,11 +61,14 @@ public abstract class AbstractChatRoomTest
     {
         protected final String roomId;
 
+        protected final Date date;
+
         public ChatTestCase()
         {
             super(system);
 
             this.roomId = UUID.randomUUID().toString();
+            this.date = new Date();
 
             // subscribe test kit actor to event stream
             system.eventStream().subscribe(getRef(), ChatEvent.class);
