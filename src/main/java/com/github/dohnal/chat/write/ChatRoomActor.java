@@ -95,7 +95,7 @@ public class ChatRoomActor extends AbstractPersistentActor
             sender().tell(ChatCommandResult.OK, self());
 
             persistAll(events, event -> {
-                LOG.info("Stored - {}", event);
+                //.info("Stored - {}", event);
 
                 // publish stored events to event stream
                 publishEvent(event);

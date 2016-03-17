@@ -13,7 +13,7 @@ public class ChatApp
 {
     public static void main(String[] args) throws InterruptedException
     {
-        final ChatRuntime chatRuntime = new ChatRuntime();
+        final ChatRuntime chatRuntime = new ChatRuntime(0);
         final ChatService chatService = new ChatServiceAkka(chatRuntime);
         final ChatRepository chatRepository = new ChatRepositoryAkka(chatRuntime);
 
