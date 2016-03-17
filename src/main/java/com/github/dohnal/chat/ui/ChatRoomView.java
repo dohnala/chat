@@ -62,8 +62,6 @@ public class ChatRoomView extends VerticalLayout implements View
     @Autowired
     private ChatRepository chatRepository;
 
-    private ChatRoom chatRoom;
-
     private Property<String> roomNameProperty;
 
     private Property<String> usernameProperty;
@@ -135,7 +133,7 @@ public class ChatRoomView extends VerticalLayout implements View
 
     protected void loadData()
     {
-        chatRoom = chatRepository.getChatRoom();
+        final ChatRoom chatRoom = chatRepository.getChatRoom();
 
         roomNameProperty.setValue(chatRoom.getName());
 
