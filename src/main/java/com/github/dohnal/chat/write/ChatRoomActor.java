@@ -78,7 +78,7 @@ public class ChatRoomActor extends AbstractPersistentActor
     public PartialFunction<Object, BoxedUnit> receiveRecover()
     {
         return ReceiveBuilder
-                .match(ChatEvent.class, state::update)
+                .match(ChatEvent.class, this::recover)
                 .build();
     }
 
@@ -110,6 +110,13 @@ public class ChatRoomActor extends AbstractPersistentActor
 
             sender().tell(ChatCommandResult.ERROR(e.getExceptions()), self());
         }
+    }
+
+    protected void recover(final @Nonnull ChatEvent event)
+    {
+        LOG.info("Recovered - {}", event);
+
+        state.update(event);
     }
 
     protected void publishEvent(final @Nonnull ChatEvent event)

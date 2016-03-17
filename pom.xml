@@ -105,6 +105,8 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <!-- AKKA -->
+
         <dependency>
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-actor_2.11</artifactId>
@@ -117,6 +119,8 @@
             <version>2.4.2</version>
         </dependency>
 
+        <!-- LEVEL DB JOURNAL -->
+
         <dependency>
             <groupId>org.iq80.leveldb</groupId>
             <artifactId>leveldb</artifactId>
@@ -128,6 +132,22 @@
             <artifactId>leveldbjni-all</artifactId>
             <version>1.8</version>
         </dependency>
+
+        <!-- MySQL DB JOURNAL -->
+
+        <dependency>
+            <groupId>com.okumin</groupId>
+            <artifactId>akka-persistence-sql-async_2.11</artifactId>
+            <version>0.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.mauricio</groupId>
+            <artifactId>mysql-async_2.11</artifactId>
+            <version>0.2.16</version>
+        </dependency>
+
+        <!-- UTILS -->
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -152,6 +172,8 @@
             <artifactId>jsr305</artifactId>
             <version>3.0.1</version>
         </dependency>
+
+        <!-- TEST -->
 
         <dependency>
             <groupId>com.typesafe.akka</groupId>
