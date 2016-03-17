@@ -69,7 +69,7 @@ public class ChatRoomViewActor extends AbstractPersistentView
 
     protected void onUserJoin(final @Nonnull UserJoined event)
     {
-        //LOG.info("Received event: " + event);
+        LOG.info("Received event: " + event);
 
         chatRoom.getUsers().add(event.getUsername());
 
@@ -83,7 +83,7 @@ public class ChatRoomViewActor extends AbstractPersistentView
 
     protected void onMessageSent(final @Nonnull MessageSent event)
     {
-        //LOG.info("Received event: " + event);
+        LOG.info("Received event: " + event);
 
         Message message = MessageTools.convert(event);
 
@@ -95,7 +95,7 @@ public class ChatRoomViewActor extends AbstractPersistentView
 
     protected void onUserLeft(final @Nonnull UserLeft event)
     {
-        //LOG.info("Received event: " + event);
+        LOG.info("Received event: " + event);
 
         chatRoom.getUsers().remove(event.getUsername());
 
@@ -109,7 +109,7 @@ public class ChatRoomViewActor extends AbstractPersistentView
 
     protected void onUserKicked(final @Nonnull UserKicked event)
     {
-        //LOG.info("Received event: " + event);
+        LOG.info("Received event: " + event);
 
         chatRoom.getUsers().remove(event.getUsername());
 
@@ -123,7 +123,7 @@ public class ChatRoomViewActor extends AbstractPersistentView
 
     protected void getChatRoom(final @Nonnull GetChatRoom query)
     {
-        //LOG.info("Received query: " + query);
+        LOG.info("Received query: " + query);
 
         // send him result
         sender().tell(new GetChatRoomResult(chatRoom), self());

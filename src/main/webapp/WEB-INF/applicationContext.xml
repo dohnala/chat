@@ -13,7 +13,7 @@
     <bean class="com.google.common.eventbus.EventBus"/>
 
     <bean id="chatRuntime" class="com.github.dohnal.chat.ChatRuntime">
-        <constructor-arg name="numberOfBots" value="10"/>
+        <constructor-arg name="numberOfBots" value="0"/>
     </bean>
 
     <bean class="com.github.dohnal.chat.write.ChatServiceAkka">
