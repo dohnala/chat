@@ -14,4 +14,8 @@ public interface ChatRepository
 
     @Nonnull
     Future<ChatRoom> getChatRoomAsync();
+
+    void addEventListener(final @Nonnull ChatEventListener listener);
+
+    void removeEventListener(final @Nonnull ChatEventListener listener);
 }

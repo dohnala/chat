@@ -1,16 +1,20 @@
 package com.github.dohnal.chat.read;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 
+import akka.actor.ActorRef;
 import akka.dispatch.Mapper;
 import akka.japi.Util;
 import akka.pattern.Patterns;
 import akka.util.Timeout;
 import com.github.dohnal.chat.ChatRuntime;
+import com.github.dohnal.chat.domain.ChatEventListener;
 import com.github.dohnal.chat.domain.ChatRepository;
 import com.github.dohnal.chat.domain.ChatRoom;
 import com.github.dohnal.chat.domain.protocol.query.GetChatRoom;
 import com.github.dohnal.chat.domain.protocol.query.GetChatRoomResult;
+import com.google.common.collect.Maps;
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
@@ -26,9 +30,12 @@ public class ChatRepositoryAkka implements ChatRepository
 
     private final ChatRuntime chatRuntime;
 
+    private final Map<ChatEventListener, ActorRef> listeners;
+
     public ChatRepositoryAkka(final @Nonnull ChatRuntime chatRuntime)
     {
         this.chatRuntime = chatRuntime;
+        this.listeners = Maps.newHashMap();
     }
 
     @Nonnull
@@ -60,5 +67,26 @@ public class ChatRepositoryAkka implements ChatRepository
                         return result.getValue();
                     }
                 }, chatRuntime.getExecutionContext());
+    }
+
+    @Override
+    public void addEventListener(final @Nonnull ChatEventListener listener)
+    {
+        ActorRef actor = chatRuntime.getSystem().actorOf(ChatEventListenerActor.props(listener));
+
+        listeners.put(listener, actor);
+    }
+
+    @Override
+    public void removeEventListener(final @Nonnull ChatEventListener listener)
+    {
+        ActorRef actor = listeners.get(listener);
+
+        if (actor != null)
+        {
+            chatRuntime.getSystem().stop(actor);
+
+            listeners.remove(listener);
+        }
     }
 }

@@ -1,7 +1,6 @@
 package com.github.dohnal.chat.read;
 
 import javax.annotation.Nonnull;
-import java.util.Date;
 
 import akka.actor.Props;
 import akka.event.Logging;
@@ -74,14 +73,24 @@ public class ChatRoomViewActor extends AbstractPersistentView
 
         chatRoom.getUsers().add(event.getUsername());
 
-        addMessage(event.getUsername(), MessageTools.convert(event), event.getDate());
+        Message message = MessageTools.convert(event);
+
+        if (message != null)
+        {
+            chatRoom.getMessages().add(message);
+        }
     }
 
     protected void onMessageSent(final @Nonnull MessageSent event)
     {
         LOG.info("Received event: " + event);
 
-        addMessage(event.getUsername(), MessageTools.convert(event), event.getDate());
+        Message message = MessageTools.convert(event);
+
+        if (message != null)
+        {
+            chatRoom.getMessages().add(message);
+        }
     }
 
     protected void onUserLeft(final @Nonnull UserLeft event)
@@ -90,7 +99,12 @@ public class ChatRoomViewActor extends AbstractPersistentView
 
         chatRoom.getUsers().remove(event.getUsername());
 
-        addMessage(event.getUsername(), MessageTools.convert(event), event.getDate());
+        Message message = MessageTools.convert(event);
+
+        if (message != null)
+        {
+            chatRoom.getMessages().add(message);
+        }
     }
 
     protected void onUserKicked(final @Nonnull UserKicked event)
@@ -99,19 +113,12 @@ public class ChatRoomViewActor extends AbstractPersistentView
 
         chatRoom.getUsers().remove(event.getUsername());
 
-        addMessage(event.getUsername(), MessageTools.convert(event), event.getDate());
-    }
+        Message message = MessageTools.convert(event);
 
-    protected void addMessage(final @Nonnull String username,
-                              final @Nonnull String message,
-                              final @Nonnull Date date)
-    {
-        Message chatMessage = new Message();
-        chatMessage.setUsername(username);
-        chatMessage.setMessage(message);
-        chatMessage.setDate(date);
-
-        chatRoom.getMessages().add(chatMessage);
+        if (message != null)
+        {
+            chatRoom.getMessages().add(message);
+        }
     }
 
     protected void getChatRoom(final @Nonnull GetChatRoom query)
