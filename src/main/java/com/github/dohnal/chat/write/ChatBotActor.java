@@ -127,12 +127,18 @@ public class ChatBotActor extends AbstractActor
     {
         joined = false;
         decision = null;
+
+        // schedule next message
+        scheduleNextMessage();
     }
 
     protected void onKicked(final @Nonnull UserKicked event)
     {
         joined = false;
         decision = null;
+
+        // schedule next message
+        scheduleNextMessage();
     }
 
     protected void onError(final @Nonnull ChatCommandResult result)
@@ -186,8 +192,7 @@ public class ChatBotActor extends AbstractActor
         return Lists.newArrayList(
                 "Hello everyone",
                 "Hi !!",
-                "Hello guys",
-                "Hello bitches");
+                "Hello guys");
     }
 
     @Nonnull
@@ -197,6 +202,7 @@ public class ChatBotActor extends AbstractActor
                 "Is there anybody?",
                 "How are you guys?",
                 "Shit",
+                "Fuck",
                 "It's nice weather today, isn't it?",
                 "What are you doing?");
     }
@@ -207,7 +213,6 @@ public class ChatBotActor extends AbstractActor
         return Lists.newArrayList(
                 "Fuck you all, I'm going out",
                 "I'm going to leave, see you soon",
-                "Bye mother fuckers",
                 "Bye");
     }
 }
