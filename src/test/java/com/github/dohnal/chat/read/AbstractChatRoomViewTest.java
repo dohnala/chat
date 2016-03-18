@@ -1,7 +1,6 @@
 package com.github.dohnal.chat.read;
 
 import javax.annotation.Nonnull;
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -14,7 +13,6 @@ import com.github.dohnal.chat.domain.protocol.event.ChatEvent;
 import com.github.dohnal.chat.domain.protocol.query.ChatQuery;
 import com.github.dohnal.chat.domain.protocol.query.ChatQueryResult;
 import com.github.dohnal.chat.write.ChatRoomAggregate;
-import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,9 +34,6 @@ public abstract class AbstractChatRoomViewTest
     @Before
     public void setup() throws IOException
     {
-        // delete journal
-        FileUtils.deleteDirectory(new File("target/chat"));
-
         // create actor system
         system = ActorSystem.create();
 
