@@ -112,9 +112,6 @@ public class ChatRoomView extends VerticalLayout implements View
 
         if (loggedUsername != null)
         {
-            roomNameProperty.setValue("Global");
-            usernameProperty.setValue("Adam");
-
             loadData();
 
             leaveButton.addClickListener(leaveButtonListener);

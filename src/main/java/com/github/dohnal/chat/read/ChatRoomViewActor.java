@@ -52,7 +52,7 @@ public class ChatRoomViewActor extends AbstractPersistentView
     @Override
     public String persistenceId()
     {
-        return chatRoom.getName();
+        return ChatRoomActor.NAME;
     }
 
     @Override
