@@ -26,7 +26,7 @@ import scala.runtime.BoxedUnit;
  */
 public class ChatRoomActor extends AbstractPersistentActor
 {
-    public static final String NAME = "GlobalChatRoom";
+    public static final String NAME = ChatRoomAggregate.ROOM_NAME;
 
     private LoggingAdapter LOG = Logging.getLogger(getContext().system(), this);
 

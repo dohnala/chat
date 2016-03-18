@@ -21,6 +21,8 @@ import com.google.common.collect.Sets;
  */
 public class ChatRoomAggregate implements Serializable
 {
+    public static final String ROOM_NAME = "GlobalChatRoom";
+
     private final Set<String> users;
 
     public ChatRoomAggregate()

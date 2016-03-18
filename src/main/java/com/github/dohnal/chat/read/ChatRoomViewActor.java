@@ -17,6 +17,7 @@ import com.github.dohnal.chat.domain.protocol.event.UserLeft;
 import com.github.dohnal.chat.domain.protocol.query.GetChatRoom;
 import com.github.dohnal.chat.domain.protocol.query.GetChatRoomResult;
 import com.github.dohnal.chat.write.ChatRoomActor;
+import com.github.dohnal.chat.write.ChatRoomAggregate;
 import scala.PartialFunction;
 import scala.runtime.BoxedUnit;
 
@@ -26,7 +27,7 @@ import scala.runtime.BoxedUnit;
 @SuppressWarnings("deprecation")
 public class ChatRoomViewActor extends AbstractPersistentView
 {
-    public static final String NAME = ChatRoomActor.NAME + "View";
+    public static final String NAME = ChatRoomViewActor.NAME + "View";
 
     private LoggingAdapter LOG = Logging.getLogger(getContext().system(), this);
 
@@ -34,13 +35,13 @@ public class ChatRoomViewActor extends AbstractPersistentView
 
     public static Props props()
     {
-        return Props.create(ChatRoomViewActor.class, ChatRoomViewActor::new);
+        return Props.create(ChatRoomViewActor.class, () -> new ChatRoomViewActor(ChatRoomAggregate.ROOM_NAME));
     }
 
-    protected ChatRoomViewActor()
+    protected ChatRoomViewActor(final @Nonnull String roomName)
     {
         chatRoom = new ChatRoom();
-        chatRoom.setName(ChatRoomActor.NAME);
+        chatRoom.setName(roomName);
     }
 
     @Override
