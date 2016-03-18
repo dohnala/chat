@@ -1,6 +1,7 @@
 package com.github.dohnal.chat.ui;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 
 import com.google.common.eventbus.EventBus;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -11,7 +12,7 @@ import com.vaadin.spring.annotation.UIScope;
  */
 @UIScope
 @SpringComponent
-public class ChatEventBus
+public class ChatEventBus implements Serializable
 {
     private final EventBus eventBus;
 

@@ -14,6 +14,7 @@ import com.github.dohnal.chat.domain.ChatRepository;
 import com.github.dohnal.chat.domain.ChatRoom;
 import com.github.dohnal.chat.domain.protocol.query.GetChatRoom;
 import com.github.dohnal.chat.domain.protocol.query.GetChatRoomResult;
+import com.github.dohnal.chat.util.Loggable;
 import com.google.common.collect.Maps;
 import scala.concurrent.Await;
 import scala.concurrent.Future;
@@ -39,6 +40,7 @@ public class ChatRepositoryAkka implements ChatRepository
     }
 
     @Nonnull
+    @Loggable
     @Override
     public ChatRoom getChatRoom()
     {

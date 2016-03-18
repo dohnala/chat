@@ -27,7 +27,7 @@ import scala.runtime.BoxedUnit;
 @SuppressWarnings("deprecation")
 public class ChatRoomViewActor extends AbstractPersistentView
 {
-    public static final String NAME = ChatRoomViewActor.NAME + "View";
+    public static final String NAME = ChatRoomActor.NAME + "View";
 
     private LoggingAdapter LOG = Logging.getLogger(getContext().system(), this);
 

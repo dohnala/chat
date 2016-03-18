@@ -13,6 +13,7 @@ import com.github.dohnal.chat.domain.protocol.command.JoinRoom;
 import com.github.dohnal.chat.domain.protocol.command.KickUser;
 import com.github.dohnal.chat.domain.protocol.command.LeaveRoom;
 import com.github.dohnal.chat.domain.protocol.command.SendMessage;
+import com.github.dohnal.chat.util.Loggable;
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
@@ -34,6 +35,7 @@ public class ChatServiceAkka implements ChatService
     }
 
     @Nonnull
+    @Loggable
     @Override
     public ChatCommandResult joinRoom(final @Nonnull String username)
     {
@@ -48,6 +50,7 @@ public class ChatServiceAkka implements ChatService
     }
 
     @Nonnull
+    @Loggable
     @Override
     public ChatCommandResult sendMessage(final @Nonnull String username,
                                          final @Nonnull String message)
@@ -64,6 +67,7 @@ public class ChatServiceAkka implements ChatService
     }
 
     @Nonnull
+    @Loggable
     @Override
     public ChatCommandResult leaveRoom(final @Nonnull String username)
     {
@@ -78,6 +82,7 @@ public class ChatServiceAkka implements ChatService
     }
 
     @Nonnull
+    @Loggable
     @Override
     public ChatCommandResult kickUser(final @Nonnull String username,
                                       final @Nonnull String kickedBy,

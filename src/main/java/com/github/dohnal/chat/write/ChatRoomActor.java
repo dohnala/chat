@@ -91,7 +91,7 @@ public class ChatRoomActor extends AbstractPersistentActor
         {
             Collection<ChatEvent> events = handler.handle(command);
 
-            // tell send that command was successfully processed
+            // tell sender that command was accepted
             sender().tell(ChatCommandResult.OK, self());
 
             persistAll(events, event -> {
@@ -108,6 +108,7 @@ public class ChatRoomActor extends AbstractPersistentActor
         {
             LOG.info("Exceptions - {}", StringUtils.join(e.getExceptions(), ", "));
 
+            // tell sender that command was rejected
             sender().tell(ChatCommandResult.ERROR(e.getExceptions()), self());
         }
     }
