@@ -1,7 +1,7 @@
 ##  Chat implementation based on CQRS + Event sourcing using Akka
 
-###### build - `mvn clean install`
+**build** - `mvn clean install`
 
-###### test - `mvn test`
+**test** - `mvn test`
 
-###### run - `mvn jetty:run`
+**run** - `mvn jetty:run`
