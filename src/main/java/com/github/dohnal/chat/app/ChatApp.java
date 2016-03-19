@@ -5,6 +5,7 @@ import com.github.dohnal.chat.domain.ChatRepository;
 import com.github.dohnal.chat.domain.ChatService;
 import com.github.dohnal.chat.read.ChatRepositoryAkka;
 import com.github.dohnal.chat.write.ChatServiceAkka;
+import com.google.common.collect.Lists;
 
 /**
  * @author dohnal
@@ -13,7 +14,7 @@ public class ChatApp
 {
     public static void main(String[] args) throws InterruptedException
     {
-        final ChatRuntime chatRuntime = new ChatRuntime(0);
+        final ChatRuntime chatRuntime = new ChatRuntime(0, Lists.newArrayList("fuck"));
         final ChatService chatService = new ChatServiceAkka(chatRuntime);
         final ChatRepository chatRepository = new ChatRepositoryAkka(chatRuntime);
 

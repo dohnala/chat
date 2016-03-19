@@ -2,20 +2,27 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context-4.1.xsd
-                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <bean class="com.github.dohnal.chat.ui.ChatUI.MyConfiguration"/>
 
     <aop:aspectj-autoproxy />
     <context:component-scan base-package="com.github.dohnal"/>
 
+    <util:list id="wordBlackList" value-type="java.lang.String">
+        <value>shit</value>
+        <value>fuck</value>
+        <value>bitch</value>
+    </util:list>
+
     <bean id="chatRuntime" class="com.github.dohnal.chat.ChatRuntime">
-        <constructor-arg name="numberOfBots" value="1"/>
+        <constructor-arg name="numberOfBots" value="0"/>
+        <constructor-arg name="wordBlackList" ref="wordBlackList"/>
     </bean>
 
     <bean class="com.github.dohnal.chat.write.ChatServiceAkka">

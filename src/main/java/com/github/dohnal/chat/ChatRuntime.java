@@ -1,7 +1,7 @@
 package com.github.dohnal.chat;
 
 import javax.annotation.Nonnull;
-import java.util.Set;
+import java.util.List;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -9,7 +9,6 @@ import com.github.dohnal.chat.read.ChatRoomViewActor;
 import com.github.dohnal.chat.write.ChatBotActor;
 import com.github.dohnal.chat.write.ChatModeratorActor;
 import com.github.dohnal.chat.write.ChatRoomActor;
-import com.google.common.collect.Sets;
 import scala.concurrent.ExecutionContext;
 
 /**
@@ -17,8 +16,6 @@ import scala.concurrent.ExecutionContext;
  */
 public class ChatRuntime
 {
-    private static final Set<String> WORD_BLACK_LIST = Sets.newHashSet("fuck", "shit", "bitch");
-
     private final ActorSystem system;
 
     private final ActorRef chatRoom;
@@ -27,7 +24,8 @@ public class ChatRuntime
 
     private final ActorRef moderator;
 
-    public ChatRuntime(final @Nonnull Integer numberOfBots)
+    public ChatRuntime(final @Nonnull Integer numberOfBots,
+                       final @Nonnull List<String> wordBlackList)
     {
         // Create actor system
         system = ActorSystem.create("system");
@@ -38,7 +36,7 @@ public class ChatRuntime
         chatRoomView = system.actorOf(ChatRoomViewActor.props(), ChatRoomViewActor.NAME);
 
         // Create moderator
-        moderator = system.actorOf(ChatModeratorActor.props(WORD_BLACK_LIST, chatRoom));
+        moderator = system.actorOf(ChatModeratorActor.props(wordBlackList, chatRoom));
 
         // Create bots
         for (int i = 1; i <= numberOfBots; i++)
